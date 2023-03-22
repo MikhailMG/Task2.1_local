@@ -1,6 +1,7 @@
 import org.example2.PageSteamHome;
 import org.example2.PageSteamPrivacy;
 import org.example2.SingletonWebDriver;
+import org.example2.UtilitiesForTestAsserts;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
@@ -66,6 +67,14 @@ public class MainTest {
         } catch (InterruptedException ie) {
             Thread.currentThread().interrupt();
         }
+
+        privacyPage.getPolicyDateToString();
+        System.out.println(privacyPage.getPolicyDateToString());
+        boolean yearIs2023 = UtilitiesForTestAsserts.
+                checkString(privacyPage.getPolicyDateToString(), "2023");
+        Assert.assertTrue(yearIs2023,"Privacy policy year is not 2023");
+
+   //     System.out.println(policyYear.incloodesString;
 
    //     privacyPage.scrollThePageTillPrivicyPolicyDATE();
 
