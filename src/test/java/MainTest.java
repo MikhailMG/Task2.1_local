@@ -1,46 +1,87 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.example2.PageSteamHome;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.example2.PageSteamPrivacy;
+import org.example2.SingletonWebDriver;
+import org.testng.Assert;
 import org.testng.annotations.*;
 
-import java.util.concurrent.TimeUnit;
-
 public class MainTest {
-    public WebDriver driver;
-
-//   PageSteamHome homepage;
-
-
-
+    PageSteamHome homepage;
+    PageSteamPrivacy privacyPage;
     @BeforeMethod
     public void before_test() {
         System.out.println("PreCondition WebDriver initialization");
-        /*Driver launch*/
-        WebDriverManager.firefoxdriver().setup();
-        WebDriver driver = new FirefoxDriver();
-//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-//       driver.manage().timeouts().pageLoadTimeout(20, TimeUnit.SECONDS);
-        this.driver = driver;
-    }
+           SingletonWebDriver.initializeWebDriver();
+      }
     @Test
     public void seleniumTest1() {
- //       PageSteamHome homepage =new PageSteamHome();
 
 /*Load Page by URL*/
-        driver.get("https://store.steampowered.com/");
+      String title= SingletonWebDriver.driver.getTitle();
+        System.out.println("The title of current page is  "+ title);
         System.out.println("breakpoint 1");
-        PageSteamHome homepage = new PageSteamHome(driver);
-        System.out.println("breakpoint 2");
+       homepage = new PageSteamHome(SingletonWebDriver.driver);
 
-/*goTo LoginPage*/
-  //      homepage.clickLoginButton();
+        Assert.assertTrue(homepage.checkLogButtonStatus()
+                ,"Login Button is NOT displayed");
+        System.out.println(homepage.checkLogButtonStatus());
+
+ /*Scroll till BOTTOM*/
+        homepage.scrollThePageTillBottom();
+        try {
+            Thread.sleep(3 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
+
+        homepage.scrollThePageTillPrivicyPolicyButton();
+        try {
+            Thread.sleep(2 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
+
+       System.out.println("breakpoint 2");
+
+/*Click Privicy Policy Button*/
+//        homepage.clickPrivicyPolicyButton();
+
+
+        homepage.swithToPrivacyPolicyTab();
+
+        privacyPage = new PageSteamPrivacy(SingletonWebDriver.driver);
 
         System.out.println("breakpoint 3");
+        String title2= SingletonWebDriver.driver.getTitle();
+        System.out.println("The title of current page is  "+ title2);
+
+        try {
+            Thread.sleep(4 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
+
+       homepage.scrollThePageTillBottom();
+        try {
+            Thread.sleep(4 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
+
+   //     privacyPage.scrollThePageTillPrivicyPolicyDATE();
+
+
+        try {
+            Thread.sleep(10 * 1000);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt();
+        }
     }
     @AfterMethod
     public void after_test() {
+        SingletonWebDriver.quitDriverSingleton();
+/*
         driver.quit();
         System.out.println("driver disabled");
+*/
     }
 }
