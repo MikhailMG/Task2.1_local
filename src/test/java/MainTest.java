@@ -61,6 +61,10 @@ public class MainTest {
             Thread.currentThread().interrupt();
         }
 
+        privacyPage.getLanguageOfPolicyElement();
+
+        /*System.out.println("Href Value = "+privacyPage..getAttribute("href"));*/
+
        homepage.scrollThePageTillBottom();
         try {
             Thread.sleep(4 * 1000);
@@ -68,10 +72,12 @@ public class MainTest {
             Thread.currentThread().interrupt();
         }
 
+        /*Check Privacy policy signature date*/
         privacyPage.getPolicyDateToString();
         System.out.println(privacyPage.getPolicyDateToString());
         boolean yearIs2023 = UtilitiesForTestAsserts.
                 checkString(privacyPage.getPolicyDateToString(), "2023");
+
         Assert.assertTrue(yearIs2023,"Privacy policy year is not 2023");
 
    //     System.out.println(policyYear.incloodesString;
