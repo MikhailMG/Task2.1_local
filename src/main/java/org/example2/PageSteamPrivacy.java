@@ -62,13 +62,13 @@ public class PageSteamPrivacy {
             String s3 = webElementHREF.replace(s2, "");
 
             String language1 = s3.replace("/","");
- //           System.out.println(language1);
+           System.out.println(language1);
             Language language = new Language();
             language.language = language1;
 
                 listOfLanguages.add(language);
         }
-            System.out.println(listOfLanguages);
+         //   System.out.println(listOfLanguages);
      //       Collections.addAll(, (language1)) ;
 
 

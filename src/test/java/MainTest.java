@@ -1,9 +1,8 @@
-import org.example2.PageSteamHome;
-import org.example2.PageSteamPrivacy;
-import org.example2.SingletonWebDriver;
-import org.example2.UtilitiesForTestAsserts;
+import org.example2.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
+
+import java.io.IOException;
 
 public class MainTest {
     PageSteamHome homepage;
@@ -14,7 +13,7 @@ public class MainTest {
            SingletonWebDriver.initializeWebDriver();
       }
     @Test
-    public void seleniumTest1() {
+    public void seleniumTest1() throws IOException {
 
 /*Load Page by URL*/
       String title= SingletonWebDriver.driver.getTitle();
@@ -62,6 +61,8 @@ public class MainTest {
         }
 
         privacyPage.getLanguageOfPolicyElement();
+        JsonMapper testData1 = new JsonMapper();
+        testData1.mapJSON("src/main/resources/TestData1/Languages.json");
 
         /*System.out.println("Href Value = "+privacyPage..getAttribute("href"));*/
 
